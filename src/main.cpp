@@ -1,4 +1,5 @@
 #include "main.h"
+#include "setup.h"
 
 void initialize() {}
 void disabled() {}
