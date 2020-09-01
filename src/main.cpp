@@ -8,6 +8,7 @@ void disabled() {}
 void competition_initialize() {}
 void autonomous() {}
 
+//Tests functionality of all drive motors by allowing the individual running of each motor
 void motorTest() {
 	if(controller.getDigital(ControllerDigital::up)) LFDrive.moveVoltage(12000);
 	else if(controller.getDigital(ControllerDigital::down)) LFDrive.moveVoltage(-12000);
@@ -25,8 +26,8 @@ void motorTest() {
 void opcontrol() {
 	while (true)
 	{
-    	drive->tank(controller.getAnalog(ControllerAnalog::leftY),controller.getAnalog(ControllerAnalog::rightY), 0.3);
+    	drive->tank(controller.getAnalog(ControllerAnalog::leftY),controller.getAnalog(ControllerAnalog::rightY), 0.3);//Drives robot using tank control.
 		
-	    delay(100);
+	    delay(100);//Waits 100ms before rerunning.
 	}
 }
