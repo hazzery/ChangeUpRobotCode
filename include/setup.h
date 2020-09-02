@@ -3,6 +3,20 @@
 
 extern Controller controller;
 
+extern ControllerButton upBtn;
+extern ControllerButton downBtn;
+extern ControllerButton leftBtn;
+extern ControllerButton rightBtn;
+extern ControllerButton ABtn;
+extern ControllerButton BBtn;
+extern ControllerButton XBtn;
+extern ControllerButton YBtn;
+
+extern ControllerButton leftUp;
+extern ControllerButton leftDown;
+extern ControllerButton rightUp;
+extern ControllerButton rightDown;
+
 extern Motor LFDrive;
 extern Motor LBDrive;
 extern Motor RFDrive;
