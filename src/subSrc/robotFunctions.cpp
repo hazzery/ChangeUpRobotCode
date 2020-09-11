@@ -27,3 +27,6 @@ void driveMotorTest() {
 	else if(ABtn.isPressed())
 		RBDrive.moveVoltage(-12000);
 }
+
+float leftSpeed() { return controller.getAnalog(ControllerAnalog::leftY) * 1200; }
+float rightSpeed() { return controller.getAnalog(ControllerAnalog::rightY) * 1200; }

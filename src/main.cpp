@@ -1,13 +1,22 @@
 #include "main.h"
 #include "setup.h"
+#include "functions.h"
 
-void autonomous() {}
+void initialize() {}
+void disabled() {}
+void competition_initialize() {}
+
+void autonomous() {
+	testRun();
+}
 
 void opcontrol() {
 	while (true)
 	{
-    	drive->tank(controller.getAnalog(ControllerAnalog::leftY),controller.getAnalog(ControllerAnalog::rightY), 0.3);//Drives robot using tank control.
+		//Drives robot using tank control.
+		LDrive.moveVoltage(leftSpeed());
+		RDrive.moveVoltage(rightSpeed());
 		
-	    delay(100);//Waits 100ms before rerunning.
+		delay(50);//Waits 50 milliseconds before rerunning.
 	}
 }

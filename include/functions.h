@@ -1,4 +1,8 @@
-extern float abs(float n);
-extern int sgn(float n);
-
 extern void driveMotorTest();
+
+float leftSpeed();
+float rightSpeed();
+
+extern void testRun();
+extern void red();
+extern void blue();
