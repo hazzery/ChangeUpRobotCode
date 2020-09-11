@@ -4,52 +4,40 @@
 Controller controller;
 
 //Up button (↑)
-ControllerButton upBtn (up);
+ControllerButton upBtn (ControllerDigital::up);
 
 //Down button (↓)
-ControllerButton downBtn (down)
+ControllerButton downBtn (ControllerDigital::down);
 
 //Left button (←)
-ControllerButton leftBtn (left);
+ControllerButton leftBtn (ControllerDigital::left);
 
 //Right button (→)
-ControllerButton rightBtn (right);
+ControllerButton rightBtn (ControllerDigital::right);
 
 //Button (A)
-ControllerButton ABtn (A);
+ControllerButton ABtn (ControllerDigital::A);
 
 //Button (B)
-ControllerButton BBtn (B);
+ControllerButton BBtn (ControllerDigital::B);
 
 //Button (X)
-ControllerButton XBtn (X);
+ControllerButton XBtn (ControllerDigital::X);
 
 //Button (Y)
-ControllerButton YBtn (Y);
+ControllerButton YBtn (ControllerDigital::Y);
 
 //Top left trigger (L1)
-ControllerButton leftUp (L1);
+ControllerButton leftUp (ControllerDigital::L1);
 
 //Bottom left trigger (L2)
-ControllerButton leftDown (L2);
+ControllerButton leftDown (ControllerDigital::L2);
 
 //Top right trigger (R1)
-ControllerButton rightUp (R1);
+ControllerButton rightUp (ControllerDigital::R1);
 
 //Bottom right trigger (R2)
-ControllerButton rightDown (R2);
-
-//Left front motor
-Motor LFDrive (-20);
-
-//Left back motor
-Motor LBDrive (10);
-
-//Right front motor
-Motor RFDrive (11);
-
-//Right back motor
-Motor RBDrive (-1);
+ControllerButton rightDown (ControllerDigital::R2);
 
 
 //Integrated encoder of left front motor
@@ -66,17 +54,7 @@ IntegratedEncoder RBEncode (1);
 
 
 //Left drive train
-MotorGroup LDrive({LFDrive, LBDrive});
+MotorGroup LDrive({-20, 10});
 
 //Right drive train
-MotorGroup RDrive({RFDrive, RBDrive});
-
-
-//Okapi Chassis Controller
-auto chassis = ChassisControllerBuilder()
-  .withMotors(LDrive, RDrive)
-  .withDimensions(AbstractMotor::gearset::green, {{4.125_in, 17.5_in}, imev5GreenTPR})
-  .build();
-
-//The robot's chassis model
-auto drive = std::dynamic_pointer_cast<SkidSteerModel>(chassis->getModel());
+MotorGroup RDrive({11, -1});
