@@ -8,30 +8,34 @@ class PID {
         //Ki -  Integral gain.
         //Kd -  Derivative gain.
         //dt -  loop interval time.
-        //max - Maximum output value. 
-        //min - Minimum output value.
-        PID (double kp, double ki, double kd, double dt, double max, double min);
+        //min - minimum output value. 
+        //max - maximum output value.
+        PID (double kp, double ki, double kd, double dt, double min, double max);
         PID ();
         ~PID();
 
         //Returns power output for specified motor, given a target sensor value and current sensor value value
-        double calculate(double target, double sensor);
-
-        //Returns true if PID is still in process.
-        bool notDone();
+        double calculate(double sensorVal);
         
         //Returns true if target has successfully reached its target.
         bool done();
 
+        //Returns PID error, given a target sensor value and current sensor value value
+        double calculateError(double sensorVal);
+
+        double setTarget(double target);
     
     private:
-        double _Kp;
-        double _Ki;
-        double _Kd;
-        double _dt;
-        double _min;
-        double _max;
+        const double _Kp;
+        const double _Ki;
+        const double _Kd;
+        const double _dt;
+        const double _min;
+        const double _max;
+        const double _maxError;
+        const double _integralLimit;
+        double _target;
+        double _error;
         double _pastError;
         double _integral;
-        double _integralLimit;
 };

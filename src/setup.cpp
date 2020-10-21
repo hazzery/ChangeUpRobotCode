@@ -50,11 +50,20 @@ IntegratedEncoder LBEncode (10);
 IntegratedEncoder RFEncode (11);
 
 //Integrated encoder of right back motor
-IntegratedEncoder RBEncode (1);
+IntegratedEncoder RBEncode (1, true);
 
+//Integrated encoder of right intake motor
+IntegratedEncoder InEncode (12);
+
+
+Motor Uptake (13);
 
 //Left drive train
-MotorGroup LDrive({-20, 10});
+MotorGroup LDrive ({-20, 10});
 
 //Right drive train
-MotorGroup RDrive({11, -1});
+MotorGroup RDrive ({11, -1});
+
+
+//Intake
+MotorGroup Intake ({-12, 19});

@@ -5,46 +5,45 @@ class Component {
 
     public:
         Component();
-        Component(Motor& motor, IntegratedEncoder& encoder);
+        Component(MotorGroup& motors, IntegratedEncoder& encoder);
         ~Component();
 
         void move(double distance);
+        void moveAsync(double distance);
+
+        void (*Component::asyncTaskPointer)(double distance);
+
+        void asyncInstructions();
+
+        Task asyncMovement;
 
         void waitFor(PID& pid);
 
-    private:
-        Motor _motor;
-        IntegratedEncoder _sensor;
-        PID _pid;
-};
+        bool notDone();
 
-class DriveTrain: public Component {
-
-    public:
-        DriveTrain(MotorGroup& motor, IntegratedEncoder& encoder);
-        ~DriveTrain();
+        double getError();
 
     private:
-        MotorGroup _motor;
-        IntegratedEncoder _sensor;
         PID _pid;
+        IntegratedEncoder _sensor;
+        MotorGroup _motors;
 };
 
 class Chassis {
 
     public:
 
-        Chassis(DriveTrain& leftDrive, DriveTrain& rightDrive);
+        Chassis(Component& leftDrive, Component& rightDrive);
         ~Chassis();
 
         void straight(double distance);
         void rotate(double angle);
 
     private:
-        DriveTrain _leftDrive;
-        DriveTrain _rightDrive;
+        Component _leftDrive;
+        Component _rightDrive;
 };
 
-extern DriveTrain lDrive;
-extern DriveTrain rDrive;
+extern Component lDrive;
+extern Component rDrive;
 extern Chassis drivePID;

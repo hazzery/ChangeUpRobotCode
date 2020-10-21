@@ -1,32 +1,69 @@
 #include "main.h"
 #include "setup.h"
 
-//Tests functionality of all drive motors by allowing the individual running of each motor
-void driveMotorTest() {
-	//Run left front drive motor using up + down buttons
-	if(upBtn.isPressed())
-		LFDrive.moveVoltage(12000);
-	else if(downBtn.isPressed())
-		LFDrive.moveVoltage(-12000);
+float leftSpeed() { return controller.getAnalog(ControllerAnalog::leftY) * 12000; }
+float rightSpeed() { return controller.getAnalog(ControllerAnalog::rightY) * 12000; }
 
-	//Run left back drive motor using left + right buttons
-	if(leftBtn.isPressed())
-		LBDrive.moveVoltage(12000);
-	else if(rightBtn.isPressed())
-		LBDrive.moveVoltage(-12000);
+void runIntake ()
+{
+	static int intakeMode = 0;
 
-	//Run right front drive motor using X + B buttons
-	if(XBtn.isPressed())
-		RFDrive.moveVoltage(12000);
-	else if(BBtn.isPressed())
-		RFDrive.moveVoltage(-12000);
-
-	//Run Right Back drive motor using Y + A buttons
-	if(YBtn.isPressed())
-		RBDrive.moveVoltage(12000);
-	else if(ABtn.isPressed())
-		RBDrive.moveVoltage(-12000);
+	if (rightUp.changedToPressed())
+	{
+		if (intakeMode != 1)
+		{
+			intakeMode = 1;
+			Intake.moveVoltage(10000);
+		}
+		else
+		{
+			intakeMode = 0;
+			Intake.moveVoltage(0);
+		}
+	}
+	else if (rightDown.changedToPressed())
+	{
+		if (intakeMode != -1)
+		{
+			intakeMode = -1;
+			Intake.moveVoltage(-10000);
+		}
+		else
+		{
+			intakeMode = 0;
+			Intake.moveVoltage(0);	
+		}
+	}
 }
 
-float leftSpeed() { return controller.getAnalog(ControllerAnalog::leftY) * 1200; }
-float rightSpeed() { return controller.getAnalog(ControllerAnalog::rightY) * 1200; }
+void runUptake ()
+{
+	static int uptakeMode = 0;
+
+	if (ABtn.changedToPressed())
+	{
+		if (uptakeMode != 1)
+		{
+			uptakeMode = 1;
+			Uptake.moveVoltage(10000);
+		}
+		else
+		{
+			uptakeMode = 0;
+			Uptake.moveVoltage(0);
+		}
+	}
+	else if (BBtn.changedToPressed())
+	{
+		if (uptakeMode != -1)
+		{
+			uptakeMode = -1;
+			Uptake.moveVoltage(-10000);
+		}
+		else
+		{
+			uptakeMode = 0;
+			Uptake.moveVoltage(0);	
+		}
+	}
+}
