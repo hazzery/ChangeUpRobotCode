@@ -4,46 +4,42 @@
 #include "PID.h"
 #include "setup.h"
 
-Component::Component(MotorGroup& motors, IntegratedEncoder& encoder)
-    : _motors(motors), _sensor(encoder), _pid(PID(30,0,0,10,-12000,12000)), asyncTaskPointer(Component::asyncInstructions), asyncMovement(asyncTaskPointer) {}
+Component::Component(MotorGroup& motors, IntegratedEncoder& encoder, Task* task)
+    : _motors(motors), _sensor(encoder), _pid(PID(30,0,0,10)), asyncTask(task) {}
 Component::Component()
-    :_motors(MotorGroup({1, 2})), _sensor(IntegratedEncoder(1)), asyncMovement(asyncTaskPointer) {}
+    :_motors(MotorGroup({1, 2})), _sensor(IntegratedEncoder(1)) {}
 Component::~Component() {}
 
-void Component::move(double distance)
-{
-    while(notDone()) {
 
+void Component::move(double distance, bool async = false)
+{
+    _pid.startTimer();
+    
+    if (!async) 
         _pid.setTarget(distance);
+    do
+    {
         double output = _pid.calculate(_sensor.get());
         _motors.moveVoltage(output);
-    
+        
         delay(20);
     }
-
+    while(notDone());
+    
     _motors.moveVoltage(0);
-
 }
 
 void Component::moveAsync(double distance)
 {
     _pid.setTarget(distance);
-    asyncMovement.resume();
+    asyncTask->resume();
 }
 
 void Component::asyncInstructions()
 {
-    while(notDone()) {
-
-        double output = _pid.calculate(_sensor.get());
-        _motors.moveVoltage(output);
+    move(_pid._target, 1);
     
-        delay(20);
-    }
-
-    _motors.moveVoltage(0);
-    asyncMovement.suspend();
-
+    asyncTask->suspend();
 }
 
 bool Component::notDone()
@@ -53,7 +49,7 @@ double Component::getError()
 { return _pid.calculateError(_sensor.get()); }
 
 Chassis::Chassis(Component& leftDrive, Component& rightDrive) 
-    : _leftDrive(leftDrive), _rightDrive(rightDrive) {}
+    : _leftDrive(leftDrive), _rightDrive(rightDrive), _pid() {}
 
 Chassis::~Chassis() {}
 
@@ -61,7 +57,7 @@ void Chassis::straight(double distance)
 {
     _leftDrive.moveAsync(distance);
     _rightDrive.moveAsync(distance);
-
+    
     while(_leftDrive.notDone() && _rightDrive.notDone())
         delay(20);
 }
@@ -74,9 +70,29 @@ void Chassis::rotate(double angle)
         delay(20);
 }
 
+void leftDriveFunction();
+void rightDriveFunction();
+void intakeFunction();
 
-Component lDrive (LDrive, LBEncode);
-Component rDrive (RDrive, RBEncode);
-Component intake (Intake, InEncode);
+Task leftDriveTask (&leftDriveFunction);
+Task rightDriveTask (&leftDriveFunction);
+Task intakeTask (&leftDriveFunction);
+
+Component lDrive (LDrive, LBEncode, &leftDriveTask);
+Component rDrive (RDrive, RBEncode, &rightDriveTask);
+Component intake (Intake, InEncode, &intakeTask);
 
 Chassis drivePID (lDrive, rDrive);
+
+void leftDriveFunction()
+{
+    lDrive.asyncInstructions();
+}
+void rightDriveFunction()
+{
+    rDrive.asyncInstructions();
+}
+void intakeFunction()
+{
+    intake.asyncInstructions();
+}

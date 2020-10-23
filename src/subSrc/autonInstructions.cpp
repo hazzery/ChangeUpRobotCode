@@ -7,6 +7,8 @@ void testRun()
     drivePID.straight(moveTarget);
     drivePID.rotate(200);
 
+    lDrive.moveAsync(200);
+
 	drivePID.straight(moveTarget);
 	cout << "done" << endl;
 

@@ -5,17 +5,15 @@ class Component {
 
     public:
         Component();
-        Component(MotorGroup& motors, IntegratedEncoder& encoder);
+        Component(MotorGroup& motors, IntegratedEncoder& encoder, Task* task);
         ~Component();
 
-        void move(double distance);
+        void move(double distance, bool async);
         void moveAsync(double distance);
-
-        void (*Component::asyncTaskPointer)(double distance);
 
         void asyncInstructions();
 
-        Task asyncMovement;
+        Task* asyncTask;
 
         void waitFor(PID& pid);
 
@@ -40,6 +38,7 @@ class Chassis {
         void rotate(double angle);
 
     private:
+        PID _pid;
         Component _leftDrive;
         Component _rightDrive;
 };
