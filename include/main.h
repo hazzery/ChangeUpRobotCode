@@ -57,7 +57,7 @@ using namespace okapi;
 
 using pros::delay;
 using pros::Task;
-using pros::millis();
+using pros::millis;
 using std::cout;
 using std::endl;
 

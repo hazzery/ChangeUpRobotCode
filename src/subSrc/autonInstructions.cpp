@@ -3,14 +3,15 @@
 
 void testRun()
 {
-    double moveTarget = 300;
-    drivePID.straight(moveTarget);
-    drivePID.rotate(200);
+    double moveTarget = 900;
+    // drivePID.straight(moveTarget);
+    rDrive.moveAsync(moveTarget);
+    // lDrive.moveAsync(moveTarget);
+    // drivePID.rotate(moveTarget);
 
-    lDrive.moveAsync(200);
 
-	drivePID.straight(moveTarget);
-	cout << "done" << endl;
+	// drivePID.straight(moveTarget);
+	// cout << "The program should end now" << endl << endl;
 
 	// std::cout << "Left Error: " << lDrive.getError(moveTarget) << "   Right Error: " << rDrive.getError(moveTarget)<< std::endl;
 }

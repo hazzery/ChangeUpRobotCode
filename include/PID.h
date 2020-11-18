@@ -41,9 +41,9 @@ class PID {
         const double _maxError;
         const double _integralLimit;
         const double _minDerivative;
-        double _error;
+        double _error = 11;
         double _pastError;
         double _integral;
-        double _derivative;
+        double _derivative = 11;
         double _startTime;
 };
