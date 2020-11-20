@@ -1,19 +1,12 @@
 #include "main.h"
-#include "robot.h"
+#include "autonFunctions.hpp"
 
 void testRun()
 {
-    double moveTarget = 900;
-    // drivePID.straight(moveTarget);
-    rDrive.moveAsync(moveTarget);
-    // lDrive.moveAsync(moveTarget);
-    // drivePID.rotate(moveTarget);
+    double moveTarget = 400;
 
+    straight(moveTarget);
 
-	// drivePID.straight(moveTarget);
-	// cout << "The program should end now" << endl << endl;
-
-	// std::cout << "Left Error: " << lDrive.getError(moveTarget) << "   Right Error: " << rDrive.getError(moveTarget)<< std::endl;
 }
 
 void red()

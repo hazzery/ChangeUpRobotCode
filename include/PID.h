@@ -6,10 +6,7 @@ class PID {
         //Kp -  Proportional gain.
         //Ki -  Integral gain.
         //Kd -  Derivative gain.
-        //dt -  loop interval time.
-        //min - minimum output value. 
-        //max - maximum output value.
-        PID (double kp, double ki, double kd, double dt);
+        PID (double kp, double ki, double kd, const char* name);
         PID ();
         ~PID();
         
@@ -29,6 +26,9 @@ class PID {
         void startTimer();
         
         double _target;
+
+    public:
+        const char* name;
     
     private:
         const double _Kp;

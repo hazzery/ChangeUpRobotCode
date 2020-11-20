@@ -1,3 +1,4 @@
+#pragma once
 // extern double functions::abs(double n);
 // extern int functions::sgn(double n);
 
