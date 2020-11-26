@@ -6,3 +6,4 @@ extern PID rightPID;
 extern PID straightPID;
 extern PID rotatePID;
 extern void straight(double distance);
+extern void rotate(double angle);

@@ -29,19 +29,18 @@ class PID {
 
     public:
         const char* name;
-    
-    private:
-        const double _Kp;
-        const double _Ki;
-        const double _Kd;
+        
+        double _Kp;
+        double _Ki;
+        double _Kd;
         const double _dt;
         const double _min;
         const double _max;
         const double _maxTime;
-        const double _maxError;
+        double _maxError;
         const double _integralLimit;
         const double _minDerivative;
-        double _error = 11;
+        double _error = 26;
         double _pastError;
         double _integral;
         double _derivative = 11;

@@ -14,7 +14,7 @@ short sgn(double n)
 
 //PID class constructor, sets member variables
 PID::PID(double kp, double ki, double kd, const char* nam = "PID")
-    :name(nam), _Kp(kp), _Ki(ki), _Kd(kd), _dt(10), _min(-12000), _max(12000), _maxTime(9999), _maxError(10), _integralLimit(9999), _minDerivative(5) {}
+    :name(nam), _Kp(kp), _Ki(ki), _Kd(kd), _dt(10), _min(-12000), _max(12000), _maxTime(9999), _maxError(25), _integralLimit(9999), _minDerivative(5) {}
 
 PID::PID()
     :_Kp(1), _Ki(0), _Kd(0), _dt(10), _min(-127), _max(127), _maxTime(9999), _maxError(1),  _integralLimit(9999), _minDerivative(1) {}
@@ -55,7 +55,7 @@ double PID::calculate(double sensorVal)
     else if (output < _min)
         output = _min;
     
-    std::cout << name << ": " << "Target is: " << _target << "   Sensor is: " << sensorVal << "   Outputting : " << output << "mV" << std::endl;
+    // std::cout << name << ": " << "Target is: " << _target << "   Sensor is: " << sensorVal << "   Outputting : " << output << "mV" << std::endl;
     // std::cout << "Outputting : " << output << "mV" << std::endl;
     
     
@@ -67,11 +67,11 @@ double PID::calculate(double sensorVal)
 
 bool PID::done() 
 {
-    // if(millis() - _startTime > _maxTime)
-    // {
-    //     std::cout << name << ": " << " Done for: millis() - _startTime > _maxTime" << std::endl;
-    //     return true;
-    // }
+    if(millis() - _startTime > _maxTime)
+    {
+        std::cout << name << ": " << " Done for: millis() - _startTime > _maxTime" << std::endl;
+        return true;
+    }
     // else if(_derivative < _minDerivative)
     // {
     //     std::cout << name << ": " << " Done for: _derivative < _minDerivative" << std::endl;
@@ -83,7 +83,7 @@ bool PID::done()
         return true;
     }
 
-    else return false;
+    return false;
 }
 
 double PID::calculateError(double sensorVal)
@@ -96,11 +96,11 @@ double PID::calculateError(double sensorVal)
 void PID::setTarget(double target)
 {
     _target = target;
-    std::cout << name << ": " << " Target Has been set to: " << _target << std::endl;
+    // std::cout << name << ": " << " Target Has been set to: " << _target << std::endl;
 }
 
 void PID::startTimer()
 {
-    std::cout << name << ": " << " Timer has started" << std::endl;
+    // std::cout << name << ": " << " Timer has started" << std::endl;
     _startTime = millis();
 }

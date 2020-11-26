@@ -8,7 +8,8 @@ void competition_initialize() {}
 
 void autonomous()
 {
-	testRun();
+	// testRun();
+	autoTune();
 }
 
 void opcontrol()
@@ -22,6 +23,6 @@ void opcontrol()
 		runUptake();
 		runIntake();
 
-		delay(50);//Waits 50 milliseconds before rerunning.
+		delay(20);//Waits 50 milliseconds before rerunning.
 	}
 }
