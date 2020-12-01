@@ -23,7 +23,7 @@ extern IntegratedEncoder RFEncode;
 extern IntegratedEncoder RBEncode;
 extern IntegratedEncoder InEncode;
 
-extern Motor Uptake;
+extern MotorGroup Uptake;
 
 extern MotorGroup LDrive;
 extern MotorGroup RDrive;
