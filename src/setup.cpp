@@ -62,7 +62,7 @@ MotorGroup LDrive ({-1, 11});
 MotorGroup RDrive ({10, -20});
 
 //Intake
-MotorGroup Intake ({-12, 19});
+MotorGroup Intake ({12, -19});
 
 //Uptake
 MotorGroup Uptake ({-2, 9});
