@@ -60,6 +60,7 @@ using pros::Task;
 using pros::millis;
 using std::cout;
 using std::endl;
+using std::string;
 
 /**
  * Prototypes for the competition control tasks are redefined here to ensure
@@ -83,6 +84,7 @@ void opcontrol(void);
  * You can add C++-only headers here
  */
 #include <iostream>
+#include <string>
 #endif
 
 #endif  // _PROS_MAIN_H_

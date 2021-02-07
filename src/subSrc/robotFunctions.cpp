@@ -10,10 +10,10 @@ void runIntake ()
 
 	if (rightUp.changedToPressed())
 	{
-		if (intakeMode != 1)
+		if (intakeMode == 0)
 		{
 			intakeMode = 1;
-			Intake.moveVoltage(10000);
+			Intake.moveVoltage(-10000);
 		}
 		else
 		{
@@ -23,10 +23,10 @@ void runIntake ()
 	}
 	else if (rightDown.changedToPressed())
 	{
-		if (intakeMode != -1)
+		if (intakeMode == 0)
 		{
 			intakeMode = -1;
-			Intake.moveVoltage(-10000);
+			Intake.moveVoltage(10000);
 		}
 		else
 		{
@@ -40,12 +40,13 @@ void runUptake ()
 {
 	static int uptakeMode = 0;
 
+
 	if (ABtn.changedToPressed())
 	{
-		if (uptakeMode != 1)
+		if (uptakeMode == 0)
 		{
 			uptakeMode = 1;
-			Uptake.moveVoltage(10000);
+			Uptake.moveVoltage(11500);
 		}
 		else
 		{
@@ -55,10 +56,10 @@ void runUptake ()
 	}
 	else if (BBtn.changedToPressed())
 	{
-		if (uptakeMode != -1)
+		if (uptakeMode == 0)
 		{
 			uptakeMode = -1;
-			Uptake.moveVoltage(-10000);
+			Uptake.moveVoltage(-11500);
 		}
 		else
 		{

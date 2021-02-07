@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 class PID {
     
@@ -6,10 +7,7 @@ class PID {
         //Kp -  Proportional gain.
         //Ki -  Integral gain.
         //Kd -  Derivative gain.
-        //dt -  loop interval time.
-        //min - minimum output value. 
-        //max - maximum output value.
-        PID (double kp, double ki, double kd, double dt);
+        PID (double kp, double ki, double kd, std::string Name);
         PID ();
         ~PID();
         
@@ -27,14 +25,18 @@ class PID {
         
         //Sets the PID's start time.
         void startTimer();
+
+        //Resets the private variables
+        void resetPID();
         
         double _target;
+
+        std::string name{ "hello" };
     
     private:
         const double _Kp;
         const double _Ki;
         const double _Kd;
-        const double _dt;
         const double _min;
         const double _max;
         const double _maxTime;

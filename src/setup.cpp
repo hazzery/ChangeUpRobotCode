@@ -56,13 +56,13 @@ IntegratedEncoder RBEncode (1, true);
 IntegratedEncoder InEncode (12);
 
 
-Motor Uptake (13);
+MotorGroup Uptake ({-2, 9});
 
 //Left drive train
-MotorGroup LDrive ({-20, 10});
+MotorGroup LDrive ({-1, 11});
 
 //Right drive train
-MotorGroup RDrive ({11, -1});
+MotorGroup RDrive ({10, -20});
 
 
 //Intake

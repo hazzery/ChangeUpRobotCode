@@ -1,6 +1,5 @@
 #include "PID.h"
 #include "main.h"
-#include <iostream>
 
 short sgn(double n)
 {
@@ -13,23 +12,25 @@ short sgn(double n)
 }
 
 //PID class constructor, sets member variables
-PID::PID(double kp, double ki, double kd, double dt)
-    :_Kp(kp), _Ki(ki), _Kd(kd), _dt(dt), _min(-12000), _max(12000), _maxTime(9999), _maxError(10), _integralLimit(9999), _minDerivative(0) {}
+PID::PID(double kp, double ki, double kd, string Name)
+    :name(Name), _Kp(kp), _Ki(ki), _Kd(kd), _min(-12000), _max(12000), _maxTime(9999), _maxError(5), _integralLimit(9999), _minDerivative(0) {}
 
 PID::PID()
-    :_Kp(0), _Ki(0), _Kd(0), _dt(0), _min(0), _max(0), _maxTime(9999), _maxError(10),  _integralLimit(9999), _minDerivative(10) {}
+    :_Kp(0), _Ki(0), _Kd(0), _min(0), _max(0), _maxTime(9999), _maxError(10),  _integralLimit(9999), _minDerivative(10) {}
 
 PID::~PID() {}
 
 //PID calculator function runs PID logic and returns power output
 double PID::calculate(double sensorVal)
 {
-    std::cout << "Target is: " << _target << std::endl;
-    std::cout << "Sensor is: " << sensorVal << std::endl;
+    cout << endl;
+    cout << "---" << name << "---------" << endl;
+    cout << "Target is: " << _target << endl;
+    cout << "Sensor is: " << sensorVal << endl;
 
     _error = _target - sensorVal;//Calculate error.
     
-    std::cout << "Error is: " << _error << std::endl;
+    cout << "Error is: " << _error << endl;
     
     //Calculate integral (If conditions are met).
     if(abs(_error) > 750)
@@ -39,9 +40,11 @@ double PID::calculate(double sensorVal)
     else if(abs(_integral) > _integralLimit)
         _integral = _integralLimit * sgn(_integral);
     else
-        _integral += (_error * _dt);
+        _integral += _error;
+
+    cout << "Integral is: " << _integral << endl;
     
-    _derivative = (_error - _pastError) / _dt;//Calculate derivative.
+    _derivative = _error - _pastError;//Calculate derivative.
     
     //Calculate PID values.
     double pOut = _Kp * _error;
@@ -56,7 +59,7 @@ double PID::calculate(double sensorVal)
     else if (output < _min)
         output = _min;
     
-    std::cout << "Outputting : " << output << "mV" << std::endl;
+    cout << "Outputting : " << output << "mV" << endl;
     
     
     //Save previous error.
@@ -67,20 +70,20 @@ double PID::calculate(double sensorVal)
 
 bool PID::done() 
 {
-    std::cout << "Checking for done..." << std::endl;
-    if(millis() - _startTime > _maxTime)
-    {
-        std::cout << " Done for: millis() - _startTime > _maxTime" << std::endl;
-        return true;
-    }
+    // cout << "Checking for done..." << endl;
+    // if(millis() - _startTime > _maxTime)
+    // {
+    //     std::cout << " Done for: millis() - _startTime > _maxTime" << std::endl;
+    //     return true;
+    // }
     // else if(_derivative < _minDerivative)
     // {
     //     std::cout << "_derivative < _minDerivative" << std::endl;
     //     return true;
     // }    
-    else if (abs(_error) <= _maxError)
+    if (abs(_error) <= _maxError)
     {
-        std::cout << "Done for: abs(_error) <= _maxError" << std::endl;
+        cout << "Done for: abs(_error) <= _maxError" << endl;
         return true;
     }
 
@@ -104,4 +107,12 @@ void PID::startTimer()
 {
     std::cout << "Timer has started" << std::endl;
     _startTime = millis();
+}
+
+void PID::resetPID()
+{
+    _error = 15;
+    _pastError = 0;
+    _integral = 0;
+    _derivative = 0;
 }

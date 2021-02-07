@@ -5,7 +5,7 @@
 #include "setup.h"
 
 Component::Component(MotorGroup& motors, IntegratedEncoder& encoder, Task* task)
-    : _motors(motors), _sensor(encoder), _pid(PID(90,0,0,10)), asyncTask(task) {}
+    : _motors(motors), _sensor(encoder), _pid(PID()), asyncTask(task) {}
 Component::Component()
     :_motors(MotorGroup({1, 2})), _sensor(IntegratedEncoder(1)) {}
 Component::~Component() {}
